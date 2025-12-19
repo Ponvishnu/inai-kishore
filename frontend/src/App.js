@@ -1,53 +1,67 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import { ThemeProvider } from './contexts/ThemeContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Auth Pages
+import EmailVerification from './pages/EmailVerification';
+import OTPVerification from './pages/OTPVerification';
+import MobileVerification from './pages/MobileVerification';
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// Main Pages
+import Home from './pages/Home';
+import Chat from './pages/Chat';
+import Memories from './pages/Memories';
+import Settings from './pages/Settings';
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+// Sub Pages
+import CreateProfile from './pages/CreateProfile';
+import YourRelationship from './pages/YourRelationship';
+import RelationshipStatus from './pages/RelationshipStatus';
+import Notifications from './pages/Notifications';
+import NotificationDetail from './pages/NotificationDetail';
+import SpecialDay from './pages/SpecialDay';
+import NewTodo from './pages/NewTodo';
+import ShareCode from './pages/ShareCode';
+import ContactSupport from './pages/ContactSupport';
+import Policy from './pages/Policy';
+import Calendar from './pages/Calendar';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
+    <ThemeProvider>
+      <Router>
+        <div className="app-container">
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          {/* Auth Flow */}
+          <Route path="/" element={<Navigate to="/email-verification" replace />} />
+          <Route path="/email-verification" element={<EmailVerification />} />
+          <Route path="/otp-verification" element={<OTPVerification />} />
+          <Route path="/mobile-verification" element={<MobileVerification />} />
+          <Route path="/create-profile" element={<CreateProfile />} />
+          
+          {/* Main App */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat/:partnerId" element={<Chat />} />
+          <Route path="/memories" element={<Memories />} />
+          <Route path="/settings" element={<Settings />} />
+          
+          {/* Sub Pages */}
+          <Route path="/your-relationship" element={<YourRelationship />} />
+          <Route path="/relationship-status" element={<RelationshipStatus />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/notification-detail" element={<NotificationDetail />} />
+          <Route path="/special-day" element={<SpecialDay />} />
+          <Route path="/new-todo" element={<NewTodo />} />
+          <Route path="/share-code" element={<ShareCode />} />
+          <Route path="/contact-support" element={<ContactSupport />} />
+          <Route path="/policy" element={<Policy />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </Router>
+    </ThemeProvider>
   );
 }
 
