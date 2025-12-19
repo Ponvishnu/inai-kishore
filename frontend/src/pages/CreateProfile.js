@@ -5,6 +5,8 @@ const CreateProfile = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [date, setDate] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleComplete = () => {
     navigate('/home');
@@ -14,19 +16,111 @@ const CreateProfile = () => {
     navigate('/calendar');
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="page-container">
+      {/* Back Button with Golden Gradient */}
       <svg 
-        className="back-button" 
-        viewBox="0 0 20 20" 
-        fill="#ffffff"
+        viewBox="0 0 24 24" 
+        fill="none"
         onClick={() => navigate(-1)}
-        style={{ cursor: 'pointer' }}
+        style={{ 
+          position: 'absolute', 
+          left: '25px', 
+          top: '25px', 
+          width: '25px', 
+          height: '25px', 
+          cursor: 'pointer',
+          zIndex: 10
+        }}
       >
-        <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+        <defs>
+          <linearGradient id="backGradientProfile" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFC300" />
+            <stop offset="100%" stopColor="#FF9934" />
+          </linearGradient>
+        </defs>
+        <path 
+          d="M15 18l-6-6 6-6" 
+          stroke="url(#backGradientProfile)" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        />
       </svg>
 
       <h1 className="page-title">Create your profile</h1>
+      
+      {/* Profile Picture Upload Section */}
+      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <div className="glass-gold" style={{ 
+            width: '120px', 
+            height: '120px', 
+            borderRadius: '50%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            overflow: 'hidden',
+            cursor: 'pointer'
+          }}
+          onClick={() => document.getElementById('profileImageUpload').click()}
+          >
+            {imagePreview ? (
+              <img 
+                src={imagePreview} 
+                alt="Profile Preview" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              <svg viewBox="0 0 24 24" fill="#FFC300" style={{ width: '50px', height: '50px' }}>
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            )}
+          </div>
+          <div 
+            className="glass" 
+            style={{ 
+              position: 'absolute', 
+              bottom: '5px', 
+              right: '5px', 
+              width: '32px', 
+              height: '32px', 
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => document.getElementById('profileImageUpload').click()}
+          >
+            <svg viewBox="0 0 24 24" fill="#FFC300" style={{ width: '18px', height: '18px' }}>
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+            </svg>
+          </div>
+          <input 
+            type="file" 
+            id="profileImageUpload" 
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleImageUpload}
+          />
+        </div>
+        <div style={{ fontSize: '14px', color: '#AEAEAE', marginTop: '10px' }}>
+          {imagePreview ? 'Tap to change photo' : 'Tap to add photo'}
+        </div>
+      </div>
       
       <div className="input-group" style={{ position: 'relative' }}>
         <label className="label">Username</label>
