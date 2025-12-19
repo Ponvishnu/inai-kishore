@@ -15,14 +15,34 @@ const NotificationDetail = () => {
 
   return (
     <div className="page-container">
+      {/* Back Button with Golden Gradient */}
       <svg 
-        className="back-button" 
-        viewBox="0 0 20 20" 
-        fill="#ffffff"
+        viewBox="0 0 24 24" 
+        fill="none"
         onClick={() => navigate('/home')}
-        style={{ cursor: 'pointer' }}
+        style={{ 
+          position: 'absolute', 
+          left: '25px', 
+          top: '25px', 
+          width: '25px', 
+          height: '25px', 
+          cursor: 'pointer',
+          zIndex: 10
+        }}
       >
-        <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+        <defs>
+          <linearGradient id="backGradientND" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFC300" />
+            <stop offset="100%" stopColor="#FF9934" />
+          </linearGradient>
+        </defs>
+        <path 
+          d="M15 18l-6-6 6-6" 
+          stroke="url(#backGradientND)" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        />
       </svg>
 
       <h1 className="page-title">Partner Notifications</h1>
