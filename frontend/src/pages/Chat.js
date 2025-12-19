@@ -19,18 +19,40 @@ const Chat = () => {
 
   return (
     <div className="page-container" style={{ paddingTop: '80px' }}>
+      {/* Back Button with Golden Gradient */}
       <svg 
-        className="back-button" 
-        viewBox="0 0 20 20" 
-        fill="#ffffff"
+        viewBox="0 0 24 24" 
+        fill="none"
         onClick={() => navigate('/home')}
-        style={{ cursor: 'pointer', top: '85px' }}
+        style={{ 
+          position: 'absolute', 
+          left: '25px', 
+          top: '60px', 
+          width: '25px', 
+          height: '25px', 
+          cursor: 'pointer',
+          zIndex: 10
+        }}
       >
-        <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+        <defs>
+          <linearGradient id="backGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFC300" />
+            <stop offset="100%" stopColor="#FF9934" />
+          </linearGradient>
+        </defs>
+        <path 
+          d="M15 18l-6-6 6-6" 
+          stroke="url(#backGradient)" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        />
       </svg>
 
-      {/* Call Icons in Top Right Corner */}
-      <div style={{ position: 'absolute', top: '25px', right: '25px', display: 'flex', gap: '15px', zIndex: 10 }}>
+      <h1 className="page-title" style={{ marginBottom: '10px' }}>Norris</h1>
+      
+      {/* Call Icons Aligned with Name */}
+      <div style={{ position: 'absolute', top: '60px', right: '25px', display: 'flex', gap: '15px', zIndex: 10 }}>
         {/* Voice Call Icon */}
         <svg 
           viewBox="0 0 24 24" 
@@ -60,8 +82,6 @@ const Chat = () => {
           <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
         </svg>
       </div>
-
-      <h1 className="page-title" style={{ marginBottom: '10px' }}>Norris</h1>
       
       <div className="glass" style={{ padding: '5px 20px', borderRadius: '50px', display: 'inline-block', margin: '0 auto 30px', fontSize: '15px', fontWeight: '300', color: '#AEAEAE', textAlign: 'center', width: 'fit-content', display: 'flex', justifyContent: 'center' }}>
         12:40 AM
